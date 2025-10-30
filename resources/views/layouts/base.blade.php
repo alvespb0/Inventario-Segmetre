@@ -38,14 +38,14 @@
                 </button>
 
                 <nav id="primary-nav" class="nav-links" aria-label="Navegação principal">
-                    <a href="{{ url('/') }}" class="nav-link is-active">Início</a>
-                    <a href="#setores" class="nav-link">Setores</a>
-                    <a href="#" class="nav-link">Itens</a>
-                    <a href="#" class="nav-link">Relatórios</a>
-                    <a href="#" class="nav-link">Configurações</a>
+                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'is-active' : '' }}">Início</a>
+                    <a href="/setores" class="nav-link {{ request()->is('setores') ? 'is-active' : '' }}">Setores</a>
+                    <a href="#" class="nav-link {{ request()->is('itens') ? 'is-active' : '' }}">Itens</a>
+                    <a href="#" class="nav-link {{ request()->is('relatorios') ? 'is-active' : '' }}">Relatórios</a>
+                    <a href="#" class="nav-link {{ request()->is('configuracoes') ? 'is-active' : '' }}">Configurações</a>
                     <div class="nav-actions">
                         <button class="btn btn-ghost" type="button">Ajuda</button>
-                        <button class="btn btn-primary" type="button">Novo Registro</button>
+                        <button class="btn btn-primary" type="button">Novo Usuario</button>
                     </div>
                 </nav>
             </div>

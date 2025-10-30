@@ -66,6 +66,43 @@ main{padding:2rem 0 3rem}
 .gap-sm{gap:.5rem}
 .gap-md{gap:1rem}
 
+/* Formulários */
+.input,
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+select,
+textarea{
+  appearance:none;
+  width:100%;
+  color:var(--c-paper);
+  background:rgba(10,17,40,.45);
+  border:1px solid rgba(254,252,251,.15);
+  border-radius:.6rem;
+  padding:.7rem .9rem;
+  outline:none;
+}
+
+.input::placeholder,
+input::placeholder,
+textarea::placeholder{color:#cfe8f0;opacity:.7}
+
+.input:focus,
+input:focus,
+select:focus,
+textarea:focus{
+  border-color: rgba(18,130,162,.9);
+  box-shadow: 0 0 0 3px rgba(18,130,162,.2);
+}
+
+.input[disabled],
+input[disabled],
+select[disabled],
+textarea[disabled]{
+  opacity:.6; cursor:not-allowed;
+}
+
 /* Responsivo */
 @media (max-width: 900px){
   .nav-toggle{display:inline-block}
@@ -74,5 +111,6 @@ main{padding:2rem 0 3rem}
   .nav-links.open{display:flex}
   .nav-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
 }
+
 
 

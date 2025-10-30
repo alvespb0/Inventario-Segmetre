@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+// Setores (telas estáticas enquanto o backend é confeccionado)
+Route::view('/setores', 'setores.index')->name('setores.index');
+Route::view('/setores/novo', 'setores.create')->name('setores.create');

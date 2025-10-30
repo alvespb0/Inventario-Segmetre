@@ -1,5 +1,5 @@
 // Toggle do menu mobile
-(function(){
+/* (function(){
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('primary-nav');
   if(!toggle || !nav) return;
@@ -10,3 +10,4 @@
 })();
 
 
+ */

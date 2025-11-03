@@ -42,6 +42,7 @@
                     <a href="/setores" class="nav-link {{ request()->is('setores') ? 'is-active' : '' }}">Setores</a>
                     <a href="#" class="nav-link {{ request()->is('itens') ? 'is-active' : '' }}">Itens</a>
                     <a href="#" class="nav-link {{ request()->is('relatorios') ? 'is-active' : '' }}">Relatórios</a>
+                    <a href="/usuarios" class="nav-link {{ request()->is('usuarios') ? 'is-active' : '' }}">Usuários</a>
                     <a href="#" class="nav-link {{ request()->is('configuracoes') ? 'is-active' : '' }}">Configurações</a>
                     <div class="nav-actions">
                         <button class="btn btn-ghost" type="button">Ajuda</button>

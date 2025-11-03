@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetorController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ Route::get('/', function () {
 });
 
 
+/** --------------------------------------------- */
+/**         Rotas Classe Setor Controller         */
 Route::controller(SetorController::class)->group(function(){
     Route::get('/setores', 'readSetor')->name('setores.show');
     Route::get('/setores/novo', 'cadastroSetor')->name('setores.new');
@@ -27,4 +30,10 @@ Route::controller(SetorController::class)->group(function(){
     Route::post('/setores/editar', 'updateSetor')->name('setores.update');
     Route::post('/setores/excluir', 'deleteSetor')->name('setores.delete');
 
+});
+
+/** --------------------------------------------- */
+/**         Rotas Classe User Controller          */
+Route::controller(UserController::class)->group(function(){
+    Route::get('/usuarios', 'readUsuarios')->name('usuarios.show');
 });

@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('login');
             $table->string('nome');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('senha');
-            $table->rememberToken();
+            $table->boolean('is_administrator');
             $table->timestamps();
         });
     }

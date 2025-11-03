@@ -9,7 +9,7 @@
             <p style="margin:.25rem 0 0; color:#cfe8f0;">Lista de Usuários cadastrados.</p>
         </div>
         <div>
-            <a href="/usuario/novo" class="btn btn-primary">Novo Usuário</a>
+            <a href="/usuarios/novo" class="btn btn-primary">Novo Usuário</a>
         </div>
     </section>
 

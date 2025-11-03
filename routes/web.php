@@ -36,4 +36,6 @@ Route::controller(SetorController::class)->group(function(){
 /**         Rotas Classe User Controller          */
 Route::controller(UserController::class)->group(function(){
     Route::get('/usuarios', 'readUsuarios')->name('usuarios.show');
+    Route::get('/usuarios/novo', 'cadastroUsuario')->name('usuarios.new');
+    Route::post('/usuarios/novo', 'createUsuario')->name('usuarios.create');
 });

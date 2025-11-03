@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Novo Setor | Inventário por Setores')
+@section('title', 'Setor | Cadastro de Setor')
 
 @section('content')
     <nav aria-label="breadcrumb" style="margin: .25rem 0 1rem;">
@@ -11,7 +11,7 @@
         </ol>
     </nav>
 
-    <section class="card" style="padding: 1.25rem; max-width: 720px;">
+    <section class="card card-center" style="padding: 1.25rem; max-width: 720px;">
         <header style="margin-bottom: 1rem; display:flex; align-items:center; justify-content: space-between; gap:.75rem;">
             <div>
                 <h1 style="margin:0; font-size: 1.25rem;">Cadastrar Setor</h1>

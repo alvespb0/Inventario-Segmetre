@@ -22,6 +22,7 @@ class User extends Authenticatable
         'nome',
         'email',
         'senha',
+        'setor_id',
         'is_administrator'
     ];
 

@@ -9,8 +9,6 @@
     @yield('head')
     @stack('styles')
     @yield('styles')
-    @stack('scripts-head')
-    @yield('scripts-head')
     <meta name="theme-color" content="#0A1128">
     <meta name="color-scheme" content="dark light">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,13 +16,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- se necessário -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <div class="app-shell">
         <header class="site-header">
             <div class="container navbar">
-                <a class="brand" href="{{ url('/') }}" aria-label="Página inicial">
-                    <span class="brand-mark"></span>
+                <a class="brand" href="'/'" aria-label="Página inicial">
                     <span class="brand-text">
                         <span class="brand-title">Inventário Segmetre</span>
                         <span class="brand-sub">Controle simples, visão completa</span>
@@ -64,7 +64,28 @@
             </div>
         </footer>
     </div>
-    <script defer src="{{ asset('assets/app.js') }}"></script>
+
+    <script>
+        @if(session('mensagem'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "4000"
+            };
+            toastr.success("{{ session('mensagem') }}");
+        @endif
+        @if(session('error'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "4000"
+            };
+            toastr.error("{{ session('error') }}");
+        @endif
+    </script>
+
     @stack('body-end')
     @yield('body-end')
 </body>

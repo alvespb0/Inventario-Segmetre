@@ -14,16 +14,6 @@
     </section>
 
     <section class="card" style="padding: 1rem;">
-        @php
-            // Variáveis genéricas enquanto o backend é confeccionado
-            $setores = $setores ?? [
-                ['id' => 1, 'nome' => 'Administração', 'itens' => 0],
-                ['id' => 2, 'nome' => 'Financeiro', 'itens' => 0],
-                ['id' => 3, 'nome' => 'TI', 'itens' => 0],
-                ['id' => 4, 'nome' => 'Operações', 'itens' => 0],
-            ];
-        @endphp
-
         <div style="display:grid; grid-template-columns: 1fr auto; gap:.75rem; align-items:center; margin-bottom: .75rem;">
             <input type="search" class="input" placeholder="Buscar setor..." style="width:100%;" />
             <div style="display:flex; gap:.5rem;">
@@ -37,15 +27,13 @@
                 <article class="card" style="padding: 1rem;">
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
-                            <div style="font-weight:700;">{{ $setor['nome'] }}</div>
-                            <div style="font-size:.9rem; color:#cfe8f0;">{{ $setor['itens'] }} itens</div>
+                            <div style="font-weight:700;">{{ $setor->nome }}</div>
                         </div>
-                        <span style="display:inline-flex; width: 34px; height: 34px; border-radius: .6rem; background: var(--c-accent);"></span>
                     </div>
 
                     <div style="display:flex; gap:.5rem; margin-top: .75rem;">
                         <a href="#" class="btn btn-ghost">Abrir</a>
-                        <a href="#" class="btn btn-ghost">Editar</a>
+                        <a href="setores/editar/{{$setor->id}}" class="btn btn-ghost">Editar</a>
                     </div>
                 </article>
             @empty

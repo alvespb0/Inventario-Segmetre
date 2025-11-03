@@ -48,7 +48,9 @@ a:hover{text-decoration:underline}
 /* Botões */
 .btn{appearance:none;border:0;cursor:pointer;border-radius:.6rem;padding:.7rem 1rem;font-weight:600;letter-spacing:.2px}
 .btn-primary{color:var(--c-paper);background:var(--c-accent);box-shadow:0 6px 16px rgba(18,130,162,.35)}
+.btn-danger{color:var(--c-paper);background-color:#0A1128;box-shadow:0 6px 16px rgba(18,130,162,.35)}
 .btn-primary:hover{filter:brightness(1.05)}
+.btn-danger:hover{filter:brightness(1.05)}
 .btn-ghost{color:var(--c-paper);background:transparent;border:1px solid rgba(254,252,251,.15)}
 .btn-ghost:hover{background:rgba(254,252,251,.06)}
 

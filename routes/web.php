@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SetorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,13 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Setores (telas estáticas enquanto o backend é confeccionado)
-Route::view('/setores', 'setores.index')->name('setores.index');
-Route::view('/setores/novo', 'setores.create')->name('setores.create');
+
+Route::controller(SetorController::class)->group(function(){
+    Route::get('/setores', 'readSetor')->name('setores.show');
+    Route::get('/setores/novo', 'cadastroSetor')->name('setores.new');
+    Route::post('/setores/novo', 'createSetor')->name('setores.create');
+    Route::get('/setores/editar/{id}', 'editarSetor')->name('setores.edit');
+    Route::post('/setores/editar', 'updateSetor')->name('setores.update');
+    Route::post('/setores/excluir', 'deleteSetor')->name('setores.delete');
+
+});

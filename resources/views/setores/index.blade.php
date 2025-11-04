@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Setores | Inventário por Setores')
+@section('title', 'Setores | Listagem de Setores')
 
 @section('content')
     <section style="display:flex; justify-content: space-between; align-items: center; gap: 1rem; margin: .5rem 0 1rem;">

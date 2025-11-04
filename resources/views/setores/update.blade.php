@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Editar Setor | Inventário por Setores')
+@section('title', 'Editar Setor | Edição de Setores')
 
 @section('content')
     <nav aria-label="breadcrumb" style="margin: .25rem 0 1rem;">

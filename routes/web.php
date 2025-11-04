@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,7 @@ Route::controller(UserController::class)->group(function(){
 });
 
 /** --------------------------------------------- */
-/**         Rotas Classe User Controller          */
+/**       Rotas Classe FornecedorController       */
 Route::middleware(['auth'])->controller(FornecedorController::class)->group(function(){
     Route::get('/fornecedores', 'readFornecedores')->name('fornecedores.show');
     Route::get('/fornecedores/novo', 'cadastroFornecedor')->name('fornecedores.new');
@@ -59,4 +60,12 @@ Route::middleware(['auth'])->controller(FornecedorController::class)->group(func
     Route::get('/fornecedores/editar/{id}', 'editarFornecedor')->name('fornecedores.edit');
     Route::post('/fornecedores/editar/{id}', 'updateFornecedor')->name('fornecedores.update');
     Route::get('/fornecedores/excluir/{id}', 'deleteFornecedor')->name('fornecedor.delete');
+});
+
+/** --------------------------------------------- */
+/**         Rotas Classe ItemController          */
+Route::middleware(['auth'])->controller(ItemController::class)->group(function(){
+    Route::get('/itens', 'readItens')->name('itens.show');
+    Route::get('/itens/novo', 'cadastroItem')->name('itens.new');
+    Route::post('/itens/novo', 'createItem')->name('itens.create');
 });

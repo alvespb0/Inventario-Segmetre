@@ -38,6 +38,9 @@ Route::middleware(['auth','admin'])->controller(UserController::class)->group(fu
     Route::get('/usuarios', 'readUsuarios')->name('usuarios.show');
     Route::get('/usuarios/novo', 'cadastroUsuario')->name('usuarios.new');
     Route::post('/usuarios/novo', 'createUsuario')->name('usuarios.create');
+    Route::get('/usuarios/editar/{id}', 'editarUsuario')->name('usuarios.edit');
+    Route::post('/usuarios/editar/{id}', 'updateUsuario')->name('usuarios.update');
+    Route::get('/usuarios/excluir/{id}', 'deleteUsuario')->name('usuarios.delete');
 });
 
 Route::controller(UserController::class)->group(function(){

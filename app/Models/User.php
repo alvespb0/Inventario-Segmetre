@@ -31,6 +31,9 @@ class User extends Authenticatable
         return $this->senha;
     }
 
+    public function setor(){
+        $this->belongsTo(Setor::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

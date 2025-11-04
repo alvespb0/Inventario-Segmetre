@@ -33,7 +33,7 @@
 
                     <div style="display:flex; gap:.5rem; margin-top: .75rem;">
                         <a href="#" class="btn btn-ghost">Abrir</a>
-                        <a href="/usuario/editar/{{$user->id}}" class="btn btn-ghost">Editar</a>
+                        <a href="/usuarios/editar/{{$user->id}}" class="btn btn-ghost">Editar</a>
                     </div>
                 </article>
             @empty

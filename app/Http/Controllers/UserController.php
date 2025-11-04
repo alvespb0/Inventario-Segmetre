@@ -42,10 +42,55 @@ class UserController extends Controller
             'setor_id' => $request->setor_id,
             'is_administrator' => $request->is_administrator
         ]);
+        
+        session()->flash('mensagem', 'Usuário cadastrado com sucesso!');
 
         return redirect()->route('usuarios.show');
     }
 
+    /**
+     * Localiza o usuario via findOrFail ID se localizado retorna a view de update
+     * @param int $id
+     * @return view
+     */
+    public function editarUsuario($id){
+        $usuario = User::findOrFail($id);
+        $setores = Setor::all();
+        return view("/usuarios/update", ['usuario' => $usuario, 'setores' => $setores]);
+    }
+
+    /**
+     * Da update no usuario dado a mesma request de register
+     * @param UserRegisterRequest $request
+     * @return Redirect()
+     */
+    public function updateUsuario(UserRegisterRequest $request, $id){
+        $request->validated();
+
+        $usuario = User::findOrFail($id);
+
+        $usuario->update([
+            'login' => $request->login,
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'senha' => $request->senha,
+            'setor_id' => $request->setor_id,
+            'is_administrator' => $request->is_administrator
+        ]);
+
+        session()->flash('mensagem', 'Usuário atualizado com sucesso!');
+
+        return redirect()->route('usuarios.show');
+    }
+
+    public function deleteUsuario($id){
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+
+        session()->flash('mensagem', 'Usuário excluído com sucesso!');
+
+        return redirect()->route('usuarios.show');
+    }
     /**
      * Retorna a view de login
      */
@@ -72,6 +117,9 @@ class UserController extends Controller
         return redirect()->route('login.show');
     }
 
+    /**
+     * Faz logout
+     */
     public function logout(){
         Auth::logout();
 

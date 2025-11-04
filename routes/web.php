@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FornecedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,15 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/login', 'login')->name('login.show');
     Route::post('/login', 'tryLogin')->name('try.login');
     Route::get('/logout', 'logout')->name('logout');
+});
+
+/** --------------------------------------------- */
+/**         Rotas Classe User Controller          */
+Route::middleware(['auth'])->controller(FornecedorController::class)->group(function(){
+    Route::get('/fornecedores', 'readFornecedores')->name('fornecedores.show');
+    Route::get('/fornecedores/novo', 'cadastroFornecedor')->name('fornecedores.new');
+    Route::post('/fornecedores/novo', 'createFornecedor')->name('fornecedores.create');
+    Route::get('/fornecedores/editar/{id}', 'editarFornecedor')->name('fornecedores.edit');
+    Route::post('/fornecedores/editar/{id}', 'updateFornecedor')->name('fornecedores.update');
+    Route::get('/fornecedores/excluir/{id}', 'deleteFornecedor')->name('fornecedor.delete');
 });

@@ -42,7 +42,7 @@
                     <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'is-active' : '' }}">Início</a>
                     <a href="/setores" class="nav-link {{ request()->is('setores') ? 'is-active' : '' }}">Setores</a>
                     <a href="#" class="nav-link {{ request()->is('itens') ? 'is-active' : '' }}">Itens</a>
-                    <a href="#" class="nav-link {{ request()->is('fornecedores') ? 'is-active' : '' }}">Fornecedores</a>
+                    <a href="/fornecedores" class="nav-link {{ request()->is('fornecedores') ? 'is-active' : '' }}">Fornecedores</a>
                     <a href="#" class="nav-link {{ request()->is('relatorios') ? 'is-active' : '' }}">Relatórios</a>
                     <a href="/usuarios" class="nav-link {{ request()->is('usuarios') ? 'is-active' : '' }}">Usuários</a>
                     <div class="nav-actions">

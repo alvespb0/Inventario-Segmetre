@@ -15,14 +15,14 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
+Route::middleware(['auth'])->get('/', function () {
     return view('index');
 });
 
 
 /** --------------------------------------------- */
 /**         Rotas Classe Setor Controller         */
-Route::controller(SetorController::class)->group(function(){
+Route::middleware(['auth','admin'])->controller(SetorController::class)->group(function(){
     Route::get('/setores', 'readSetor')->name('setores.show');
     Route::get('/setores/novo', 'cadastroSetor')->name('setores.new');
     Route::post('/setores/novo', 'createSetor')->name('setores.create');
@@ -34,8 +34,13 @@ Route::controller(SetorController::class)->group(function(){
 
 /** --------------------------------------------- */
 /**         Rotas Classe User Controller          */
-Route::controller(UserController::class)->group(function(){
+Route::middleware(['auth','admin'])->controller(UserController::class)->group(function(){
     Route::get('/usuarios', 'readUsuarios')->name('usuarios.show');
     Route::get('/usuarios/novo', 'cadastroUsuario')->name('usuarios.new');
     Route::post('/usuarios/novo', 'createUsuario')->name('usuarios.create');
+});
+
+Route::controller(UserController::class)->group(function(){
+    Route::get('/login', 'login')->name('login.show');
+    Route::post('/login', 'tryLogin')->name('try.login');
 });

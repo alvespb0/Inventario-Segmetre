@@ -36,7 +36,6 @@ class UserRegisterRequest extends FormRequest
             ],
             'setor_id' => 'required|exists:setor,id',
             'is_administrator' => 'required|boolean',
-
         ];
     }
     

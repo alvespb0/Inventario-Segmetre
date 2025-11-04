@@ -26,6 +26,11 @@ class UserController extends Controller
         return view("usuarios/create", ['setores'=> $setores]);
     }
 
+    /**
+     * Salva o usuário no banco
+     * @param UserRegisterRequest $request
+     * @return redirect 
+     */
     public function createUsuario(UserRegisterRequest $request){
         $request->validated();
 
@@ -41,5 +46,24 @@ class UserController extends Controller
         return redirect()->route('usuarios.show');
     }
 
+    /**
+     * Retorna a view de login
+     */
+    public function login(){
+        return view('/auth/login');
+    }
+    
+    public function tryLogin(Request $request){
+        $loginInput = $request->login; 
 
+        $campo = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'login';
+
+        if (Auth::attempt([$campo => $loginInput, 'password' => $request->senha])) {
+            session()->flash('mensagem', 'Login realizado com sucesso!');
+            return redirect()->route('setores.show');
+        }
+
+        session()->flash('error', 'Credenciais inválidas!');
+        return redirect()->route('usuarios.show');
+    }
 }

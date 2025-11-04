@@ -37,6 +37,7 @@
                     <span class="nav-toggle-bar"></span>
                 </button>
 
+                @if(auth()->user())
                 <nav id="primary-nav" class="nav-links" aria-label="Navegação principal">
                     <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'is-active' : '' }}">Início</a>
                     <a href="/setores" class="nav-link {{ request()->is('setores') ? 'is-active' : '' }}">Setores</a>
@@ -49,6 +50,7 @@
                         <button class="btn btn-primary" type="button">Novo Usuario</button>
                     </div>
                 </nav>
+                @endif
             </div>
         </header>
 

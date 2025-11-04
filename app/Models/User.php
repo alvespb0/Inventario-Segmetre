@@ -26,6 +26,11 @@ class User extends Authenticatable
         'is_administrator'
     ];
 
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

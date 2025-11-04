@@ -46,8 +46,8 @@
                     <a href="/usuarios" class="nav-link {{ request()->is('usuarios') ? 'is-active' : '' }}">Usuários</a>
                     <a href="#" class="nav-link {{ request()->is('configuracoes') ? 'is-active' : '' }}">Configurações</a>
                     <div class="nav-actions">
-                        <button class="btn btn-ghost" type="button">Ajuda</button>
-                        <button class="btn btn-primary" type="button">Novo Usuario</button>
+                        <a href="#"><button class="btn btn-ghost" type="button">Ajuda</button></a>
+                        <a href="/logout"><button class="btn btn-primary" type="button">Sair</button></a>
                     </div>
                 </nav>
                 @endif

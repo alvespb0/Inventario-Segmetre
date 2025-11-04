@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 
 Route::middleware(['auth'])->get('/', function () {
     return view('index');
-});
+})->name('index');
 
 
 /** --------------------------------------------- */
@@ -43,4 +43,5 @@ Route::middleware(['auth','admin'])->controller(UserController::class)->group(fu
 Route::controller(UserController::class)->group(function(){
     Route::get('/login', 'login')->name('login.show');
     Route::post('/login', 'tryLogin')->name('try.login');
+    Route::get('/logout', 'logout')->name('logout');
 });

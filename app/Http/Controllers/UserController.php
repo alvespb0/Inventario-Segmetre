@@ -53,6 +53,11 @@ class UserController extends Controller
         return view('/auth/login');
     }
     
+    /**
+     * Verifica se o login input é email ou login para definir o campo definido o campo faz login via Auth::attempt
+     * @param Request $request
+     * @return Redirect Route
+     */
     public function tryLogin(Request $request){
         $loginInput = $request->login; 
 
@@ -60,10 +65,16 @@ class UserController extends Controller
 
         if (Auth::attempt([$campo => $loginInput, 'password' => $request->senha])) {
             session()->flash('mensagem', 'Login realizado com sucesso!');
-            return redirect()->route('setores.show');
+            return redirect()->route('index');
         }
 
         session()->flash('error', 'Credenciais inválidas!');
-        return redirect()->route('usuarios.show');
+        return redirect()->route('login.show');
+    }
+
+    public function logout(){
+        Auth::logout();
+
+        return redirect()->route('login.show');
     }
 }

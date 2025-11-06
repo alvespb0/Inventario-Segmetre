@@ -46,25 +46,19 @@
         </div>
 
         <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
-            @php
-                $setores = [
-                    ['nome' => 'Administração', 'itens' => 0],
-                    ['nome' => 'Financeiro', 'itens' => 0],
-                    ['nome' => 'TI', 'itens' => 0],
-                    ['nome' => 'Operações', 'itens' => 0],
-                ];
-            @endphp
-            @foreach($setores as $setor)
+            @forelse($setores as $setor)
                 <a href="#" class="card" style="padding: 1rem; display:block; transition: transform .15s ease, box-shadow .15s ease;">
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
-                            <div style="font-weight: 700;">{{ $setor['nome'] }}</div>
-                            <div style="font-size:.9rem; color:#cfe8f0;">{{ $setor['itens'] }} itens</div>
+                            <div style="font-weight: 700;">{{ $setor->nome }}</div>
+                            <div style="font-size:.9rem; color:#cfe8f0;"> itens</div>
                         </div>
                         <span style="display:inline-flex; width: 34px; height: 34px; border-radius: .6rem; background: var(--c-accent);"></span>
                     </div>
                 </a>
-            @endforeach
+                @empty
+                <h3>teste</h3>
+            @endforelse
         </div>
     </section>
 @endsection

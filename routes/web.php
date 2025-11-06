@@ -5,6 +5,7 @@ use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemSetorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,6 @@ use App\Http\Controllers\ItemController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::middleware(['auth'])->get('/', function () {
-    return view('index');
-})->name('index');
-
 
 /** --------------------------------------------- */
 /**         Rotas Classe Setor Controller         */
@@ -71,4 +67,10 @@ Route::middleware(['auth'])->controller(ItemController::class)->group(function()
     Route::get('/itens/editar/{id}', 'editarItem')->name('itens.edit');
     Route::post('/itens/editar/{id}', 'updateItem')->name('itens.update');
     Route::get('/itens/excluir/{id}', 'deleteItem')->name('itens.delete');
+});
+
+/** --------------------------------------------- */
+/**       Rotas Classe ItemSetorController        */
+Route::middleware(['auth'])->controller(ItemSetorController::class)->group(function(){
+    Route::get('/', 'readItemSetor')->name('itemSetor.show');
 });

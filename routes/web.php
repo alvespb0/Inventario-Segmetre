@@ -68,4 +68,7 @@ Route::middleware(['auth'])->controller(ItemController::class)->group(function()
     Route::get('/itens', 'readItens')->name('itens.show');
     Route::get('/itens/novo', 'cadastroItem')->name('itens.new');
     Route::post('/itens/novo', 'createItem')->name('itens.create');
+    Route::get('/itens/editar/{id}', 'editarItem')->name('itens.edit');
+    Route::post('/itens/editar/{id}', 'updateItem')->name('itens.update');
+    Route::get('/itens/excluir/{id}', 'deleteItem')->name('itens.delete');
 });

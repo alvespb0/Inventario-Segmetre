@@ -28,7 +28,7 @@
                 <tr style="background:rgba(254,252,251,.08); text-align:left;">
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1);">#</th>
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1);">Nome</th>
-                    <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1);">Descricao</th>
+                    <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:center">Descricao</th>
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:right;">Ações</th>
                 </tr>
             </thead>

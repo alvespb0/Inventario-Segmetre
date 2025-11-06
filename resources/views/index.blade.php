@@ -12,8 +12,8 @@
                     Comece criando um novo registro ou acessando um setor existente abaixo.
                 </p>
                 <div style="display:flex; gap:.5rem; margin-top: 1rem;">
-                    <a href="#" class="btn btn-primary">Novo Registro</a>
-                    <a href="#setores" class="btn btn-ghost">Ver Setores</a>
+                    <a href="/itens-setor/novo" class="btn btn-primary">Novo Registro</a>
+                    <a href="#" class="btn btn-ghost">Nova Solicitação</a>
                 </div>
             </div>
             <div style="flex: 1 1 280px; min-width: 260px;">
@@ -21,11 +21,11 @@
                     <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:.75rem;">
                         <div style="background: rgba(10,17,40,.45); border:1px solid rgba(254,252,251,.08); border-radius:.75rem; padding: .9rem; text-align:center;">
                             <div style="font-size: .8rem; color:#cfe8f0;">Setores</div>
-                            <div style="font-size: 1.25rem; font-weight:700;">—</div>
+                            <div style="font-size: 1.25rem; font-weight:700;">{{$setores->count()}}</div>
                         </div>
                         <div style="background: rgba(10,17,40,.45); border:1px solid rgba(254,252,251,.08); border-radius:.75rem; padding: .9rem; text-align:center;">
                             <div style="font-size: .8rem; color:#cfe8f0;">Itens</div>
-                            <div style="font-size: 1.25rem; font-weight:700;">—</div>
+                            <div style="font-size: 1.25rem; font-weight:700;">{{$itens->count()}}</div>
                         </div>
                         <div style="background: rgba(10,17,40,.45); border:1px solid rgba(254,252,251,.08); border-radius:.75rem; padding: .9rem; text-align:center;">
                             <div style="font-size: .8rem; color:#cfe8f0;">Pendências</div>
@@ -41,7 +41,7 @@
         <div style="display:flex; justify-content: space-between; align-items: center; gap: 1rem; margin: .5rem 0 1rem;">
             <h2 style="margin:0; font-size: 1.15rem;">Setores</h2>
             <div>
-                <button class="btn btn-ghost" type="button">Gerenciar Setores</button>
+                <a href="/setores" class="btn btn-ghost" type="button">Gerenciar Setores</a>
             </div>
         </div>
 
@@ -51,16 +51,18 @@
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
                             <div style="font-weight: 700;">{{ $setor->nome }}</div>
-                            <div style="font-size:.9rem; color:#cfe8f0;">{{$setor->itemSetor->count()}} itens</div>
+                            <div style="font-size:.9rem; color:#cfe8f0;">{{$setor->itemSetor ? $setor->itemSetor->sum('qtd_estoque') : 0}} Itens em estoque</div>
+                            <div style="font-size:.9rem; color:#cfe8f0;">{{$setor->itemSetor->count()}} Itens vinculados no setor</div>
                         </div>
                     </div>
                 </a>
                 @empty
-                <h3>teste</h3>
+                <h3>Nenhum setor cadastrado</h3>
             @endforelse
         </div>
     </section>
 @endsection
+
 
 
 

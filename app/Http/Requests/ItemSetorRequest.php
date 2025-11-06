@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ItemSetorRequest extends FormRequest
 {
@@ -23,7 +24,13 @@ class ItemSetorRequest extends FormRequest
     {
         return [
             'setor_id' => 'required|exists:setor,id',
-            'item_id' => 'required|exists:item,id',
+            'item_id' => [
+                'required',
+                'exists:item,id',
+                Rule::unique('item_setor')->where(function ($query) {
+                    return $query->where('setor_id', $this->setor_id);
+                }),
+            ],
             'qtd_estoque' => 'nullable|integer'
         ];
     }
@@ -36,6 +43,7 @@ class ItemSetorRequest extends FormRequest
 
             'item_id.required' => 'O campo item é obrigatório.',
             'item_id.exists' => 'O item selecionado é inválido ou não existe.',
+            'item_id.unique' => 'Este item já está vinculado a este setor.',
 
             'qtd_estoque.integer' => 'A quantidade em estoque deve ser um número inteiro.',
         ];

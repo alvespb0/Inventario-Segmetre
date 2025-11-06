@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('setor_id');
             $table->unsignedBigInteger('item_id');
             $table->integer('qtd_estoque');
+            $table->unique(['item_id', 'setor_id']);
             $table->foreign('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->foreign('setor_id')->references('id')->on('setor')->onDelete('cascade');
             $table->timestamps();

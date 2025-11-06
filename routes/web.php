@@ -49,7 +49,7 @@ Route::controller(UserController::class)->group(function(){
 
 /** --------------------------------------------- */
 /**       Rotas Classe FornecedorController       */
-Route::middleware(['auth'])->controller(FornecedorController::class)->group(function(){
+Route::middleware(['auth', 'admin'])->controller(FornecedorController::class)->group(function(){
     Route::get('/fornecedores', 'readFornecedores')->name('fornecedores.show');
     Route::get('/fornecedores/novo', 'cadastroFornecedor')->name('fornecedores.new');
     Route::post('/fornecedores/novo', 'createFornecedor')->name('fornecedores.create');
@@ -72,5 +72,7 @@ Route::middleware(['auth'])->controller(ItemController::class)->group(function()
 /** --------------------------------------------- */
 /**       Rotas Classe ItemSetorController        */
 Route::middleware(['auth'])->controller(ItemSetorController::class)->group(function(){
-    Route::get('/', 'readItemSetor')->name('itemSetor.show');
+    Route::get('/', 'readItemSetorIndex')->name('index');
+    Route::get('/itens-setor/novo', 'cadastroItemSetor')->name('itemSetor.new');
+    Route::post('/itens-setor/novo', 'createItemSetor')->name('itemSetor.create');
 });

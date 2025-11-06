@@ -11,10 +11,11 @@ use App\Models\Setor;
 
 class ItemSetorController extends Controller
 {
-    public function readItemSetor(){
+    public function readItemSetorIndex(){
         $setores = Setor::all();
         $itensSetor = ItemSetor::all();
-        return view('index', ['itensSetor' => $itensSetor, 'setores' => $setores]);
+        $itens = Item::all();
+        return view('index', ['itensSetor' => $itensSetor, 'setores' => $setores, 'itens' => $itens]);
     }
 
     /**
@@ -30,12 +31,12 @@ class ItemSetorController extends Controller
     public function createItemSetor(ItemSetorRequest $request){
         $request->validated();
 
-        ItemSetorRequest::create([
+        ItemSetor::create([
             'setor_id' => $request->setor_id,
             'item_id' => $request->item_id,
             'qtd_estoque' => $request->qtd_estoque
         ]);
         
-        return redirect()->route('');
+        return redirect()->route('index');
     }
 }

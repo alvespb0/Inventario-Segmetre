@@ -51,9 +51,8 @@
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
                             <div style="font-weight: 700;">{{ $setor->nome }}</div>
-                            <div style="font-size:.9rem; color:#cfe8f0;"> itens</div>
+                            <div style="font-size:.9rem; color:#cfe8f0;">{{$setor->itemSetor->count()}} itens</div>
                         </div>
-                        <span style="display:inline-flex; width: 34px; height: 34px; border-radius: .6rem; background: var(--c-accent);"></span>
                     </div>
                 </a>
                 @empty

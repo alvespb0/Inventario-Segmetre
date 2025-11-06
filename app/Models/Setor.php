@@ -14,4 +14,8 @@ class Setor extends Model
     protected $fillable =[
         'nome'
     ];
+
+    public function itemSetor(){
+        return $this->hasMany(ItemSetor::class, 'setor_id');
+    }
 }

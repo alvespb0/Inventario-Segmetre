@@ -24,7 +24,7 @@
     <div class="app-shell">
         <header class="site-header">
             <div class="container navbar">
-                <a class="brand" href="'/'" aria-label="Página inicial">
+                <a class="brand" href="/" aria-label="Página inicial">
                     <span class="brand-text">
                         <span class="brand-title">Inventário Segmetre</span>
                         <span class="brand-sub">Controle simples, visão completa</span>

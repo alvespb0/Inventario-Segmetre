@@ -13,7 +13,7 @@
                 </p>
                 <div style="display:flex; gap:.5rem; margin-top: 1rem;">
                     <a href="/itens-setor/novo" class="btn btn-primary">Novo Registro</a>
-                    <a href="#" class="btn btn-ghost">Nova Solicitação</a>
+                    <a href="{{route('itemSetor.new')}}" class="btn btn-ghost">Nova Solicitação</a>
                 </div>
             </div>
             <div style="flex: 1 1 280px; min-width: 260px;">
@@ -47,7 +47,7 @@
 
         <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
             @forelse($setores as $setor)
-                <a href="#" class="card" style="padding: 1rem; display:block; transition: transform .15s ease, box-shadow .15s ease;">
+                <a href="/itens-setor/estoque/{{$setor->id}}" class="card" style="padding: 1rem; display:block; transition: transform .15s ease, box-shadow .15s ease;">
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
                             <div style="font-weight: 700;">{{ $setor->nome }}</div>

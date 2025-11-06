@@ -73,6 +73,9 @@ Route::middleware(['auth'])->controller(ItemController::class)->group(function()
 /**       Rotas Classe ItemSetorController        */
 Route::middleware(['auth'])->controller(ItemSetorController::class)->group(function(){
     Route::get('/', 'readItemSetorIndex')->name('index');
+    Route::get('/itens-setor/estoque/{setor_id}', 'readItemSetor')->name('itemSetor.show');
     Route::get('/itens-setor/novo', 'cadastroItemSetor')->name('itemSetor.new');
     Route::post('/itens-setor/novo', 'createItemSetor')->name('itemSetor.create');
+    Route::post('/itens-setor/atualiza-estoque', 'updateQtdEstoque')->name('itemSetor.update-estoque');
+    Route::post('/itens/setor/excluir', 'deleteItemSetor')->name('itemSetor.delete');
 });

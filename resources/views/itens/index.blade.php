@@ -51,6 +51,12 @@
             </tbody>
         </table>
     </div>
+
+    @if($itens->hasPages())
+        <div class="pagination-wrapper" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(254,252,251,.08);">
+            {{ $itens->links('pagination.custom') }}
+        </div>
+    @endif
 </section>
 @endsection
 

@@ -27,7 +27,7 @@
                 </ul>
             </div>
         @endif
-        <form method="post" action="{{route('itens.update', $item->id)}}" style="display:grid; gap: 1rem; text: align-center">
+        <form method="post" onsubmit="selecionarTodos()" action="{{route('itens.update', $item->id)}}" style="display:grid; gap: 1rem; text: align-center">
             @csrf
 
             <div style="display:grid; gap:.5rem;">
@@ -38,6 +38,38 @@
                 <label for="" style="font-weight:600;">Descrição</label>
                 <input id="descricao" name="descricao" type="text" class="input" placeholder="Ex.: Caneta Esfereográfica de cor azul ciano" required style="width:100%;" value="{{$item->descricao}}"/>
             </div>
+            <div style="display:grid; gap:.5rem;">
+                <label for="fornecedores" style="font-weight:600;">Fornecedores</label>
+
+                <div class="dual-listbox" style="display:flex; align-items:center; gap:1rem;">
+                    <div style="flex:1;">
+                        <h4 style="margin:.25rem 0;">Disponíveis</h4>
+                        <select id="disponiveis" multiple style="width:100%; height:150px;">
+                            @foreach ($fornecedores as $fornecedor)
+                                @if (!in_array($fornecedor->id, $fornecedoresSelecionados))
+                                    <option value="{{ $fornecedor->id }}">{{ $fornecedor->nome }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:.5rem; justify-content:center;">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="mover('disponiveis','selecionados')">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-ghost" onclick="mover('selecionados','disponiveis')">&lt;&lt;</button>
+                    </div>
+
+                    <div style="flex:1;">
+                        <h4 style="margin:.25rem 0;">Selecionados</h4>
+                        <select id="selecionados" name="fornecedores[]" multiple style="width:100%; height:150px;">
+                            @foreach ($fornecedores as $fornecedor)
+                                @if (in_array($fornecedor->id, $fornecedoresSelecionados))
+                                    <option value="{{ $fornecedor->id }}">{{ $fornecedor->nome }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div style="display:flex; gap:.5rem; justify-content:flex-end; margin-top:.5rem;">
                 <a href="/itens/excluir/{{$item->id}}" class="btn btn-ghost" type="button" onclick="return confirm('Tem certeza que deseja excluir esse item?')">Excluir</a>
                 <a href="/itens" class="btn btn-ghost" type="button">Cancelar</a>
@@ -45,6 +77,29 @@
             </div>
         </form>
     </section>
+    <script>
+    function mover(origemId, destinoId) {
+        const origem = document.getElementById(origemId);
+        const destino = document.getElementById(destinoId);
+
+        [...origem.selectedOptions].forEach(opt => {
+            // Cria cópia do option
+            const copia = opt.cloneNode(true);
+            copia.selected = true; // <-- ESSENCIAL
+            destino.appendChild(copia);
+
+            // Remove do select de origem
+            origem.removeChild(opt);
+        });
+    }
+function selecionarTodos() {
+    const selecionados = document.getElementById('selecionados');
+    for (let opt of selecionados.options) {
+        opt.selected = true;
+    }
+}
+
+    </script>
 @endsection
 
 

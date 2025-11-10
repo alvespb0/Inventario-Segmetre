@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\ItemFornecedor;
+use App\Models\Fornecedor;
+use Illuminate\Support\Arr;
 
 class ItemController extends Controller
 {
@@ -11,7 +14,7 @@ class ItemController extends Controller
      * Retorna a view de listagem de itens cadastrados
      */
     public function readItens(){
-        $itens = Item::all();
+        $itens = Item::orderBy('nome', 'asc')->paginate(5);
         return view('/itens/index', ['itens' => $itens]);
     }
 
@@ -19,7 +22,8 @@ class ItemController extends Controller
      * Retorna a view de cadastro de item
      */
     public function cadastroItem(){
-        return view('/itens/create');
+        $fornecedores = Fornecedor::all();
+        return view('/itens/create', ['fornecedores' => $fornecedores]);
     }
 
     /**
@@ -28,10 +32,22 @@ class ItemController extends Controller
      * @return Redirect itens.show
      */
     public function createItem(Request $request){
-        Item::create([
+        $item = Item::create([
             'nome' => $request->nome,
             'descricao' => $request->descricao
         ]);
+
+        $fornecedores = Arr::wrap($request->fornecedores);
+
+        foreach($fornecedores as $fornecedor){
+            if ($fornecedor) { // evita criar se vier vazio
+                ItemFornecedor::create([
+                    'item_id' => $item->id,
+                    'fornecedor_id' => $fornecedor,
+                    'valor_unitario' => null
+                ]);
+            }
+        }
 
         session()->flash('mensagem', 'Item cadastrado com sucesso');
 
@@ -43,8 +59,9 @@ class ItemController extends Controller
      */
     public function editarItem($id){
         $item = Item::findOrFail($id);
-
-        return view('/itens/update', ['item' => $item]);
+        $fornecedores = Fornecedor::all();
+        $fornecedoresSelecionados = $item->itemFornecedor->pluck('fornecedor_id')->toArray();
+        return view('/itens/update', ['item' => $item, 'fornecedores' => $fornecedores, 'fornecedoresSelecionados' => $fornecedoresSelecionados]);
     }
 
     /**
@@ -55,11 +72,24 @@ class ItemController extends Controller
     public function updateItem(Request $request, $id){
         $item = Item::findOrFail($id);
 
+        $itemFornecedor = $item->itemFornecedor()->delete();
+
         $item->update([
             'nome' => $request->nome,
             'descricao' => $request->descricao
         ]);
 
+        $fornecedores = Arr::wrap($request->fornecedores);
+
+        foreach($fornecedores as $fornecedor){
+            if ($fornecedor) { 
+                ItemFornecedor::create([
+                    'item_id' => $item->id,
+                    'fornecedor_id' => $fornecedor,
+                    'valor_unitario' => null
+                ]);
+            }
+        }
         session()->flash('mensagem', 'Item atualizado com sucesso');
 
         return redirect()->route('itens.show');

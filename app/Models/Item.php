@@ -15,4 +15,8 @@ class Item extends Model
         'nome',
         'descricao'
     ];
+
+    public function itemFornecedor(){
+        return $this->hasMany(ItemFornecedor::class, 'item_id');
+    }
 }

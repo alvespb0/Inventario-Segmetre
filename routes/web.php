@@ -62,11 +62,17 @@ Route::middleware(['auth', 'admin'])->controller(FornecedorController::class)->g
 /**         Rotas Classe ItemController          */
 Route::middleware(['auth'])->controller(ItemController::class)->group(function(){
     Route::get('/itens', 'readItens')->name('itens.show');
+    Route::get('/itens/filtro', 'filterItens')->name('itens.filter');
     Route::get('/itens/novo', 'cadastroItem')->name('itens.new');
     Route::post('/itens/novo', 'createItem')->name('itens.create');
     Route::get('/itens/editar/{id}', 'editarItem')->name('itens.edit');
     Route::post('/itens/editar/{id}', 'updateItem')->name('itens.update');
     Route::get('/itens/excluir/{id}', 'deleteItem')->name('itens.delete');
+});
+
+Route::middleware(['auth', 'admin'])->controller(ItemController::class)->group(function(){
+    Route::get('/itens/fornecedores/{id}', 'tabelaPrecoItemFornecedor')->name('itens.fornecedores');
+    Route::post('/itens/fornecedores/atualiza-valor', 'updateValorUnitario')->name('itens.fornecedores-atualiza-valor');
 });
 
 /** --------------------------------------------- */

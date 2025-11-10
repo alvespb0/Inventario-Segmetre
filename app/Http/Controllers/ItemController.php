@@ -19,6 +19,17 @@ class ItemController extends Controller
     }
 
     /**
+     * Retorna a view de listagem de itens dado uma request
+     */
+    public function filterItens(Request $request){
+        $itens = Item::where('nome', 'like', '%'.$request->busca.'%')
+                    ->orWhere('descricao', 'like', '%'.$request->busca.'%')
+                    ->orderBy('nome', 'asc')
+                    ->paginate(5)->appends($request->query());
+
+        return view('/itens/index', ['itens' => $itens]);
+    }
+    /**
      * Retorna a view de cadastro de item
      */
     public function cadastroItem(){
@@ -72,29 +83,39 @@ class ItemController extends Controller
     public function updateItem(Request $request, $id){
         $item = Item::findOrFail($id);
 
-        $itemFornecedor = $item->itemFornecedor()->delete();
-
         $item->update([
             'nome' => $request->nome,
             'descricao' => $request->descricao
         ]);
 
-        $fornecedores = Arr::wrap($request->fornecedores);
+        $fornecedoresNovos = Arr::wrap($request->fornecedores);
+        $fornecedoresAtuais = $item->itemFornecedor->pluck('fornecedor_id')->toArray();
 
-        foreach($fornecedores as $fornecedor){
-            if ($fornecedor) { 
-                ItemFornecedor::create([
-                    'item_id' => $item->id,
-                    'fornecedor_id' => $fornecedor,
-                    'valor_unitario' => null
-                ]);
-            }
+        $adicionar = array_diff($fornecedoresNovos, $fornecedoresAtuais);
+        $remover = array_diff($fornecedoresAtuais, $fornecedoresNovos);
+
+        foreach($adicionar as $fornecedorId){
+            ItemFornecedor::create([
+                'item_id' => $item->id,
+                'fornecedor_id' => $fornecedorId,
+                'valor_unitario' => null
+            ]);
         }
+
+        if (!empty($remover)) {
+            ItemFornecedor::where('item_id', $item->id)
+                ->whereIn('fornecedor_id', $remover)
+                ->delete();
+        }
+
         session()->flash('mensagem', 'Item atualizado com sucesso');
 
         return redirect()->route('itens.show');
     }
 
+    /**
+     * Deleta o item no banco
+     */
     public function deleteItem($id){
         $item = Item::findOrFail($id);
 
@@ -103,5 +124,29 @@ class ItemController extends Controller
         session()->flash('mensagem', 'Item excluído com sucesso');
 
         return redirect()->route('itens.show');
+    }
+
+    /**
+     * Retorna a view de tabela de preço dos fornecedores
+     * Recebe um id de ITEM e faz um where item_id id
+     * @param $id
+     * @return view
+     */
+    public function tabelaPrecoItemFornecedor($id){
+        $itemFornecedor = ItemFornecedor::where('item_id', $id)->get();
+
+        return view('itens/updateTabela', ['itemFornecedor' => $itemFornecedor]);
+    }
+
+    public function updateValorUnitario(Request $request){
+        $itemFornecedor = ItemFornecedor::findOrFail($request->itemFornecedor_id);
+
+        $itemFornecedor->update([
+            'valor_unitario' => $request->valor_unitario
+        ]);
+
+        session()->flash('mensagem', 'Valor unitário atualizado com sucesso');
+        
+        return redirect()->back();
     }
 }

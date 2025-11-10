@@ -13,14 +13,16 @@
         </div>
     </section>
 
-<section class="card" style="padding: 1rem;">
-    <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
-        <input type="search" class="input" placeholder="Buscar Item..." style="width:100%;" />
-        <div style="display:flex; gap:.5rem;">
-            <button class="btn btn-ghost" type="button">Filtrar</button>
-            <button class="btn btn-ghost" type="button">Exportar</button>
+<section class="card" style="padding: 1rem;">        
+    <form action="{{route('itens.filter')}}" method="GET">
+        <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
+                <input type="search" class="input" name="busca" placeholder="Buscar Item..." style="width:100%;" />
+                <div style="display:flex; gap:.5rem;">
+                    <button class="btn btn-ghost" type="submit">Filtrar</button>
+                    <button class="btn btn-ghost" type="button">Exportar</button>
+                </div>
         </div>
-    </div>
+    </form>
 
     <div style="overflow-x:auto;">
         <table style="width:100%; border-collapse:collapse; min-width:600px;">
@@ -39,7 +41,7 @@
                         <td style="padding:.75rem 1rem;">{{ $item->nome }}</td>
                         <td style="padding:.75rem 1rem;">{{ $item->descricao ?? '-' }}</td>
                         <td style="padding:.75rem 1rem; text-align:right;">
-                            <a href="#" class="btn btn-ghost" style="padding:.4rem .8rem;">Abrir</a>
+                            <a href="/itens/fornecedores/{{ $item->id }}" class="btn btn-ghost" style="padding:.4rem .8rem;">Tabela $</a>
                             <a href="/itens/editar/{{ $item->id }}" class="btn btn-ghost" style="padding:.4rem .8rem;">Editar</a>
                         </td>
                     </tr>

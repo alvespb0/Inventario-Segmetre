@@ -41,12 +41,13 @@
         <div style="display:flex; justify-content: space-between; align-items: center; gap: 1rem; margin: .5rem 0 1rem;">
             <h2 style="margin:0; font-size: 1.15rem;">Setores</h2>
             <div>
-                <a href="/setores" class="btn btn-ghost" type="button">Gerenciar Setores</a>
+                @if(Auth::user()->is_administrator)<a href="/setores" class="btn btn-ghost" type="button">Gerenciar Setores</a>@endif
             </div>
         </div>
 
         <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
             @forelse($setores as $setor)
+                @if(Auth::user()->setor->id == $setor->id || Auth::user()->is_administrator)
                 <a href="/itens-setor/estoque/{{$setor->id}}" class="card" style="padding: 1rem; display:block; transition: transform .15s ease, box-shadow .15s ease;">
                     <div style="display:flex; justify-content: space-between; align-items: center; gap:.5rem;">
                         <div>
@@ -56,6 +57,7 @@
                         </div>
                     </div>
                 </a>
+                @endif
                 @empty
                 <h3>Nenhum setor cadastrado</h3>
             @endforelse

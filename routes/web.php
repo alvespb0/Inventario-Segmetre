@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemSetorController;
+use App\Http\Controllers\SolicitacaoItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,4 +85,10 @@ Route::middleware(['auth'])->controller(ItemSetorController::class)->group(funct
     Route::post('/itens-setor/novo', 'createItemSetor')->name('itemSetor.create');
     Route::post('/itens-setor/atualiza-estoque', 'updateQtdEstoque')->name('itemSetor.update-estoque');
     Route::post('/itens/setor/excluir', 'deleteItemSetor')->name('itemSetor.delete');
+});
+
+/** --------------------------------------------- */
+/**     Rotas Classe SolicitacaoItemController    */
+Route::middleware(['auth', 'admin'])->controller(SolicitacaoItemController::class)->group(function(){
+    Route::get('/solicitacoes', 'readSolicitacoesGeral')->name('solicitacoes.show');
 });

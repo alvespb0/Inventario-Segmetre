@@ -9,7 +9,7 @@
             <p style="margin:.25rem 0 0; color:#cfe8f0;">Lista de Itens Solicitados.</p>
         </div>
         <div>
-            <a href="" class="btn btn-primary">Nova Solicitação</a>
+            <a href="/solicitacoes/novo" class="btn btn-primary">Nova Solicitação</a>
         </div>
     </section>
 
@@ -43,12 +43,30 @@
                         <td style="padding:.75rem 1rem; text-align:left;">{{ $solicitacao->item->nome }}</td>
                         <td style="padding:.75rem 1rem; text-align:center;">{{ $solicitacao->setor->nome ?? '-' }}</td>
                         <td style="padding:.75rem 1rem; text-align:center;">
-                            <span class="status-badge status-{{ strtolower($solicitacao->status) }}">{{ $solicitacao->status }}</span>
+                            <span class="status-badge status-{{ strtolower($solicitacao->status) }}">{{ ucwords(str_replace('_', ' ', strtoupper($solicitacao->status))) }}</span>
                         </td>
                         <td style="padding:.75rem 1rem; text-align:center;">{{ $solicitacao->quantidade }}</td>
-                        <td style="padding:.75rem 1rem; text-align:right;">
-                            <button type="button" class="btn btn-ghost" style="padding:.4rem .8rem;" onclick="abrirModal({{ $solicitacao->id }})">Abrir</button>
-                            <button type="button" class="btn btn-ghost" style="padding:.4rem .8rem;"><a href="" style="text-decoration:none;color:white">Editar</a></button>
+                        <td style="padding:.75rem 1rem; text-align:right; white-space:nowrap;">
+                            <button type="button" class="btn btn-ghost" style="padding:.35rem .7rem;" onclick="abrirModal({{ $solicitacao->id }})">Abrir</button>
+                            <button type="button" class="btn btn-ghost" style="padding:.35rem .7rem;">
+                                <a href="" style="text-decoration:none;color:white">Editar</a>
+                            </button>
+                            
+                            @if(Auth::user()->is_administrator)
+                            <form action="{{route('solicitacoes.atualiza-status', $solicitacao->id)}}" method="POST" style="display:inline;">
+                                @csrf
+                                <select name="status"
+                                        class="form-select"
+                                        style="display:inline-block; width:auto; font-size:.85rem; padding:.25rem .5rem; color:white; border:1px solid rgba(255,255,255,.2);"
+                                        onchange="this.form.submit()">
+                                    @foreach (\App\Models\SolicitacaoItem::getStatuses() as $key => $label)
+                                        <option value="{{ $key }}" {{ $solicitacao->status == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -105,8 +123,8 @@
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Sugestão de Fornecedor</label>
-                    <div style="color:#fefcfb;">Fornecedor: {{ $solicitacao->item->getFornecedorMaisBaratoAttribute() }} | Valor: R${{ $solicitacao->item->getMenorValorUnitarioAttribute() }}</div>
-                    <div style="color:#fefcfb;">Fornecedor Parceiro: {{ $solicitacao->item->getParceiroMaisBaratoAttribute() }} | Valor: R${{ $solicitacao->item->getMenorValorParceiroAttribute() }}</div>
+                    <div style="color:#fefcfb;">Fornecedor: {{ $solicitacao->item->getFornecedorMaisBaratoAttribute() }} | Valor Unitário: R${{ $solicitacao->item->getMenorValorUnitarioAttribute() }}</div>
+                    <div style="color:#fefcfb;">Fornecedor Parceiro: {{ $solicitacao->item->getParceiroMaisBaratoAttribute() }} | Valor Unitário: R${{ $solicitacao->item->getMenorValorParceiroAttribute() }}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Data da Solicitação</label>
@@ -148,19 +166,19 @@
     border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
-.status-aprovado, .status-aprovada {
+.status-aprovado_finalizado, .status-aprovada_finalizado {
     background: rgba(40, 167, 69, 0.2);
     color: #28a745;
     border: 1px solid rgba(40, 167, 69, 0.3);
 }
 
-.status-rejeitado, .status-rejeitada {
+.status-negado, .status-negado {
     background: rgba(220, 53, 69, 0.2);
     color: #dc3545;
     border: 1px solid rgba(220, 53, 69, 0.3);
 }
 
-.status-em-andamento {
+.status-aprovado_andamento {
     background: rgba(18, 130, 162, 0.2);
     color: #1282A2;
     border: 1px solid rgba(18, 130, 162, 0.3);

@@ -34,7 +34,7 @@
                         </div>
                         <div style="background: rgba(10,17,40,.45); border:1px solid rgba(254,252,251,.08); border-radius:.75rem; padding: .9rem; text-align:center;">
                             <div style="font-size: .8rem; color:#cfe8f0;">Pendências</div>
-                            <div style="font-size: 1.25rem; font-weight:700;">—</div>
+                            <div style="font-size: 1.25rem; font-weight:700;">{{App\Models\SolicitacaoItem::getNumPendenciasAttribute()}}</div>
                         </div>
                     </div>
                 </div>

@@ -53,4 +53,16 @@ class SolicitacaoItemController extends Controller
 
         return redirect()->route('index');
     }
+
+    public function updateStatus(Request $request, $id){
+        $solicitacao = SolicitacaoItem::findOrFail($id);
+        
+        $solicitacao->update([
+            'status' => $request->status
+        ]);
+
+        session()->flash('mensagem', 'Status alterado com sucesso');
+        
+        return redirect()->back();
+    }
 }

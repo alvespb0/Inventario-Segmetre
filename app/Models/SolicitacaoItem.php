@@ -27,4 +27,17 @@ class SolicitacaoItem extends Model
     public function item(){
         return $this->belongsTo(Item::class, 'item_id');
     }
+
+    public static function getStatuses(){
+        return [
+            'pendente' => 'Pendente',
+            'negado' => 'Negado',
+            'aprovado_andamento' => 'Aprovado (Em andamento)',
+            'aprovado_finalizado' => 'Aprovado (Finalizado)',
+        ];
+    }
+
+    public static function getNumPendenciasAttribute(){
+        return self::where('status', 'pendente')->count();
+    }
 }

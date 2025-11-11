@@ -21,7 +21,7 @@
         </header>
 
             <div id="itens-setor-list" class="table-like">
-                <div class="table-row table-head" style="display:grid; grid-template-columns: 120px 1fr 2fr 180px 100px; gap:.75rem; padding:.6rem .75rem; border-bottom:1px solid rgba(254,252,251,.08); color:#cfe8f0;">
+                <div class="table-row table-head" style="display:grid; grid-template-columns: 80px 1.2fr 2fr 1.5fr 1fr 160px; gap:.75rem; padding:.6rem .75rem; border-bottom:1px solid rgba(254,252,251,.08); color:#cfe8f0;">
                     <div style="font-weight:600;">Código</div>
                     <div style="font-weight:600;">Nome do Item</div>
                     <div style="font-weight:600;">Descricao</div>
@@ -31,15 +31,15 @@
                 </div>
 
                 @forelse($itemFornecedor as $item)
-                    <div class="table-row" style="display:grid; grid-template-columns: 120px 1fr 2fr 180px 100px; gap:.75rem; align-items:center; padding:.6rem .75rem; border-bottom:1px solid rgba(254,252,251,.06);">
+                    <div class="table-row" style="display:grid; grid-template-columns: 80px 1.2fr 2fr 1.5fr 1fr 160px; gap:.75rem; align-items:center; padding:.6rem .75rem; border-bottom:1px solid rgba(254,252,251,.06);">
                         <div>#{{ $item->id }}</div>
                         <div>{{ $item->item->nome }}</div>
                         <div>{{ $item->item->descricao }}</div>
                         <div>{{ $item->fornecedor->cliente_segmetre ? 'Sim' : 'Não' }}</div>
                         <div>{{ $item->fornecedor->nome }}</div>
-                        <form method="POST" action="" style="display:flex; justify-content:flex-end; gap:.5rem;">
+                        <form method="POST" action="{{route('itens.fornecedores-atualiza-valor')}}" style="display:flex; justify-content:flex-end; gap:.5rem;">
                             @csrf
-                            <input type="hidden" name="itemSetor_id" value="{{ $item->id }}" />
+                            <input type="hidden" name="itemFornecedor_id" value="{{ $item->id }}" />
                             <input
                                 type="number"
                                 name="valor_unitario"

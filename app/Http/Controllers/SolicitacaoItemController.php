@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SolicitacaoItemRequest;
+
 use App\Models\SolicitacaoItem;
 use App\Models\Item;
 use App\Models\Setor;
@@ -36,4 +38,19 @@ class SolicitacaoItemController extends Controller
         return view('/solicitacoes/create', ['itens' => $itens, 'setores' => $setores]);
     }
 
+    public function createSolicitacao(SolicitacaoItemRequest $request){
+        $request->validated();
+
+        SolicitacaoItem::create([
+            'setor_id' => $request->setor_id,
+            'item_id' => $request->item_id,
+            'quantidade' => $request->qtd,
+            'data_solicitacao' => $request->data_solicitacao,
+            'observacao' => $request->observacoes ?? null
+        ]);
+
+        session()->flash('mensagem', 'Solicitação criada com sucesso');
+
+        return redirect()->route('index');
+    }
 }

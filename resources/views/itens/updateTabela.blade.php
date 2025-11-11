@@ -25,8 +25,8 @@
                     <div style="font-weight:600;">Código</div>
                     <div style="font-weight:600;">Nome do Item</div>
                     <div style="font-weight:600;">Descricao</div>
-                    <div style="font-weight:600;">Fornecedor</div>
                     <div style="font-weight:600;">É cliente Segmetre?</div>
+                    <div style="font-weight:600;">Fornecedor</div>
                     <div style="font-weight:600; text-align:right;">Valor Unitário</div>
                 </div>
 

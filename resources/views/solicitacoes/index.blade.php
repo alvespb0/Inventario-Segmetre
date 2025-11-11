@@ -104,6 +104,11 @@
                     </div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
+                    <label style="font-weight:600; color:#cfe8f0;">Sugestão de Fornecedor</label>
+                    <div style="color:#fefcfb;">Fornecedor: {{ $solicitacao->item->getFornecedorMaisBaratoAttribute() }} | Valor: R${{ $solicitacao->item->getMenorValorUnitarioAttribute() }}</div>
+                    <div style="color:#fefcfb;">Fornecedor Parceiro: {{ $solicitacao->item->getParceiroMaisBaratoAttribute() }} | Valor: R${{ $solicitacao->item->getMenorValorParceiroAttribute() }}</div>
+                </div>
+                <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Data da Solicitação</label>
                     <div style="color:#fefcfb;">
                         @if($solicitacao->data_solicitacao)

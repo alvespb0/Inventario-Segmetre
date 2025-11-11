@@ -21,7 +21,28 @@ class Item extends Model
     }
 
     public function getMenorValorUnitarioAttribute(){
-        return $this->itemFornecedores->min('fornecedor.valor_unitario');
+        return $this->itemFornecedor->min('valor_unitario');
     }
 
+    public function getFornecedorMaisBaratoAttribute(){
+        $maisBarato = $this->itemFornecedor?->sortBy('valor_unitario')->first();
+        return $maisBarato?->fornecedor->nome ?? null;
+    }
+
+    public function getMenorValorParceiroAttribute(){
+        $fornecedoresSegmetre = $this->itemFornecedor
+            ?->filter(fn($if) => $if->fornecedor && $if->fornecedor->cliente_segmetre);
+
+        return $fornecedoresSegmetre?->min('valor_unitario');
+    }
+
+    public function getParceiroMaisBaratoAttribute(){
+        $maisBarato = $this->itemFornecedor
+            ?->filter(fn($if) => $if->fornecedor && $if->fornecedor->cliente_segmetre)
+            ?->sortBy('valor_unitario')
+            ->first();
+
+        return $maisBarato?->fornecedor->nome ?? null;
+
+    }
 }

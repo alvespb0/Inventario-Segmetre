@@ -92,3 +92,9 @@ Route::middleware(['auth'])->controller(ItemSetorController::class)->group(funct
 Route::middleware(['auth', 'admin'])->controller(SolicitacaoItemController::class)->group(function(){
     Route::get('/solicitacoes', 'readSolicitacoesGeral')->name('solicitacoes.show');
 });
+
+Route::middleware(['auth'])->controller(SolicitacaoItemController::class)->group(function(){
+    Route::get('/solicitacoes-realizadas/{setor_id}', 'readSolicitacoesSetor')->name('solicitacoes-setor.show');
+    Route::get('/solicitacoes/novo', 'cadastroSolicitacao')->name('solicitacoes.new');
+    Route::post('/solicitacoes/novo', 'createSolicitacao')->name('solicitacoes.create');
+});

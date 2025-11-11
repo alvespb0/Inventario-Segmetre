@@ -13,8 +13,13 @@
                 </p>
                 <div style="display:flex; gap:.5rem; margin-top: 1rem;">
                     <a href="/itens-setor/novo" class="btn btn-primary">Novo Registro</a>
-                    <a href="{{route('itemSetor.new')}}" class="btn btn-ghost">Nova Solicitação</a>
-                </div>
+                    <a href="/solicitacoes/novo" class="btn btn-ghost">Nova Solicitação</a>
+                    @if(Auth::user()->is_administrator)
+                        <a href="/solicitacoes" class="btn btn-ghost">Solicitações</a>
+                    @else
+                        <a href="/solicitacoes-realizadas/{{Auth::user()->setor_id}}" class="btn btn-ghost">Solicitações</a>  
+                    @endif
+                 </div>
             </div>
             <div style="flex: 1 1 280px; min-width: 260px;">
                 <div class="card" style="padding:1rem;">

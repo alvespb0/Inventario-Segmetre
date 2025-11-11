@@ -38,7 +38,17 @@
             </thead>
             <tbody>
                 @forelse($solicitacoes as $solicitacao)
-                    <tr style="border-bottom:1px solid rgba(254,252,251,.05);">
+                    <tr 
+                        class="solicitacao-row" 
+                        data-id="{{ $solicitacao->id }}"
+                        data-item-nome="{{ e($solicitacao->item->nome) }}"
+                        data-item-descricao="{{ e($solicitacao->item->descricao ?? 'Sem descrição') }}"
+                        data-setor="{{ e($solicitacao->setor->nome ?? '-') }}"
+                        data-status="{{ e($solicitacao->status) }}"
+                        data-quantidade="{{ $solicitacao->quantidade }}"
+                        data-data-solicitacao="{{ $solicitacao->data_solicitacao }}"
+                        data-observacao="{{ e($solicitacao->observacao ?? 'Sem observações') }}"
+                        style="border-bottom:1px solid rgba(254,252,251,.05);">
                         <td style="padding:.75rem 1rem; text-align:left;">{{ $solicitacao->id }}</td>
                         <td style="padding:.75rem 1rem; text-align:left;">{{ $solicitacao->item->nome }}</td>
                         <td style="padding:.75rem 1rem; text-align:center;">{{ $solicitacao->setor->nome ?? '-' }}</td>
@@ -47,8 +57,8 @@
                         </td>
                         <td style="padding:.75rem 1rem; text-align:center;">{{ $solicitacao->quantidade }}</td>
                         <td style="padding:.75rem 1rem; text-align:right;">
-                            <button type="button" class="btn btn-ghost" style="padding:.4rem .8rem;" onclick="abrirModal({{ $solicitacao->id }})">Abrir</button>
-                            <button type="button" class="btn btn-ghost" style="padding:.4rem .8rem;"><a href="" style="text-decoration:none;color:white">Editar</a></button>
+                            <button type="button" class="btn btn-ghost btn-abrir-modal" style="padding:.4rem .8rem;" data-id="{{ $solicitacao->id }}">Abrir</button>
+                            <a href="" class="btn btn-ghost" style="padding:.4rem .8rem;">Editar</a>
                         </td>
                     </tr>
                 @empty
@@ -67,211 +77,107 @@
     @endif
 </section>
 
-@foreach($solicitacoes as $solicitacao)
-<!-- Modal de Detalhes da Solicitação {{ $solicitacao->id }} -->
-<div id="modalSolicitacao{{ $solicitacao->id }}" class="modal-overlay" style="display:none;">
+<!-- Modal de Detalhes da Solicitação -->
+<div id="modalSolicitacao" class="modal-overlay" style="display:none;">
     <div class="modal-content">
         <div class="modal-header">
             <h2 style="margin:0; font-size: 1.25rem;">Detalhes da Solicitação</h2>
-            <button type="button" class="modal-close" onclick="fecharModal({{ $solicitacao->id }})" aria-label="Fechar">&times;</button>
+            <button type="button" class="modal-close" onclick="fecharModal()" aria-label="Fechar">&times;</button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="modalBody">
             <div style="display:grid; gap:1rem;">
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">ID da Solicitação</label>
-                    <div style="color:#fefcfb;">{{ $solicitacao->id }}</div>
+                    <div id="modalId" style="color:#fefcfb;">{{$solicitacao->id}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Item</label>
-                    <div style="color:#fefcfb;">{{ $solicitacao->item->nome }}</div>
+                    <div id="modalItem" style="color:#fefcfb;">{{$solicitacao->item->nome}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Descrição do Item</label>
-                    <div style="color:#fefcfb;">{{ $solicitacao->item->descricao ?? 'Sem descrição' }}</div>
+                    <div id="modalItemDescricao" style="color:#fefcfb;">{{$solicitacao->item->descricao}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Setor</label>
-                    <div style="color:#fefcfb;">{{ $solicitacao->setor->nome ?? '-' }}</div>
+                    <div id="modalSetor" style="color:#fefcfb;">{{$solicitacao->setor->nome}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Quantidade</label>
-                    <div style="color:#fefcfb;">{{ $solicitacao->quantidade }}</div>
+                    <div id="modalQuantidade" style="color:#fefcfb;">{{$solicitacao->quantidade}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Status</label>
-                    <div style="color:#fefcfb;">
-                        <span class="status-badge status-{{ strtolower($solicitacao->status) }}">{{ $solicitacao->status }}</span>
-                    </div>
+                    <div id="modalStatus" style="color:#fefcfb;">{{$solicitacao->status}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Data da Solicitação</label>
-                    <div style="color:#fefcfb;">
-                        @if($solicitacao->data_solicitacao)
-                            {{ date('d/m/Y H:i', strtotime($solicitacao->data_solicitacao)) }}
-                        @else
-                            -
-                        @endif
-                    </div>
+                    <div id="modalData" style="color:#fefcfb;">{{$solicitacao->data_solicitacao}}</div>
                 </div>
                 <div style="display:grid; gap:.5rem;">
                     <label style="font-weight:600; color:#cfe8f0;">Observação</label>
-                    <div style="color:#fefcfb; min-height:60px; padding:.75rem; background:rgba(10,17,40,.3); border-radius:.5rem; border:1px solid rgba(254,252,251,.1);">{{ $solicitacao->observacao ?? 'Sem observações' }}</div>
+                    <div id="modalObservacao" style="color:#fefcfb; min-height:60px; padding:.75rem; background:rgba(10,17,40,.3); border-radius:.5rem; border:1px solid rgba(254,252,251,.1);">{{$solicitacao->observacao}}</div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-ghost" onclick="fecharModal({{ $solicitacao->id }})">Fechar</button>
+            <button type="button" class="btn btn-ghost" onclick="fecharModal()">Fechar</button>
         </div>
     </div>
 </div>
-@endforeach
-
-@push('styles')
-<style>
-.status-badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-.status-pendente {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-}
-
-.status-aprovado, .status-aprovada {
-    background: rgba(40, 167, 69, 0.2);
-    color: #28a745;
-    border: 1px solid rgba(40, 167, 69, 0.3);
-}
-
-.status-rejeitado, .status-rejeitada {
-    background: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
-    border: 1px solid rgba(220, 53, 69, 0.3);
-}
-
-.status-em-andamento {
-    background: rgba(18, 130, 162, 0.2);
-    color: #1282A2;
-    border: 1px solid rgba(18, 130, 162, 0.3);
-}
-
-/* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-}
-
-.modal-content {
-    background: rgba(0, 31, 84, 0.95);
-    border: 1px solid rgba(254, 252, 251, 0.15);
-    border-radius: 1rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem;
-    border-bottom: 1px solid rgba(254, 252, 251, 0.1);
-}
-
-.modal-close {
-    background: transparent;
-    border: none;
-    color: #fefcfb;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-    transition: background 0.2s;
-}
-
-.modal-close:hover {
-    background: rgba(254, 252, 251, 0.1);
-}
-
-.modal-body {
-    padding: 1.25rem;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.modal-footer {
-    padding: 1rem 1.25rem;
-    border-top: 1px solid rgba(254, 252, 251, 0.1);
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-}
-</style>
-@endpush
 
 @push('body-end')
 <script>
 function abrirModal(id) {
-    const modal = document.getElementById('modalSolicitacao' + id);
-    if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+    const row = document.querySelector(`tr.solicitacao-row[data-id="${id}"]`);
+    if (!row) return;
+
+    
+    if (dados.dataSolicitacao) {
+        const dataSolicitacao = new Date(dados.dataSolicitacao);
+        document.getElementById('modalData').textContent = dataSolicitacao.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else {
+        document.getElementById('modalData').textContent = '-';
     }
+    
+    document.getElementById('modalObservacao').textContent = dados.observacao;
+
+    document.getElementById('modalSolicitacao').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
-function fecharModal(id) {
-    const modal = document.getElementById('modalSolicitacao' + id);
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
+function fecharModal() {
+    document.getElementById('modalSolicitacao').style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Fechar modal ao clicar no overlay
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                const id = modal.id.replace('modalSolicitacao', '');
-                fecharModal(id);
-            }
+    const modal = document.getElementById('modalSolicitacao');
+    
+    document.querySelectorAll('.btn-abrir-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            abrirModal(id);
         });
     });
 
-    // Fechar com ESC
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                fecharModal();
+            }
+        });
+    }
+
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                if (modal.style.display === 'flex') {
-                    const id = modal.id.replace('modalSolicitacao', '');
-                    fecharModal(id);
-                }
-            });
+        if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+            fecharModal();
         }
     });
 });

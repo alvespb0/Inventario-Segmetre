@@ -19,4 +19,9 @@ class Item extends Model
     public function itemFornecedor(){
         return $this->hasMany(ItemFornecedor::class, 'item_id');
     }
+
+    public function getMenorValorUnitarioAttribute(){
+        return $this->itemFornecedores->min('fornecedor.valor_unitario');
+    }
+
 }

@@ -92,6 +92,7 @@ Route::middleware(['auth'])->controller(ItemSetorController::class)->group(funct
 Route::middleware(['auth', 'admin'])->controller(SolicitacaoItemController::class)->group(function(){
     Route::get('/solicitacoes', 'readSolicitacoesGeral')->name('solicitacoes.show');
     Route::post('/solicitacoes/atualiza-status/{id}', 'updateStatus')->name('solicitacoes.atualiza-status');
+    Route::get('/solicitacoes/excluir/{id}', 'deleteStatus')->name('solicitacoes.delete');
 });
 
 Route::middleware(['auth'])->controller(SolicitacaoItemController::class)->group(function(){

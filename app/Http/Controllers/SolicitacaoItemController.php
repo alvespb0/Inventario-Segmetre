@@ -38,6 +38,10 @@ class SolicitacaoItemController extends Controller
         return view('/solicitacoes/create', ['itens' => $itens, 'setores' => $setores]);
     }
 
+    /**
+     * Valida a request via SolicitacaoItemRequest e salva no banco
+     * @param SolicitacaoItemRequest $request
+     */
     public function createSolicitacao(SolicitacaoItemRequest $request){
         $request->validated();
 
@@ -54,6 +58,12 @@ class SolicitacaoItemController extends Controller
         return redirect()->route('index');
     }
 
+    /**
+     * Dá update no status, somente para administradores
+     * @param Request $request
+     * @param int $id
+     * @return redirect() back
+     */
     public function updateStatus(Request $request, $id){
         $solicitacao = SolicitacaoItem::findOrFail($id);
         
@@ -62,6 +72,16 @@ class SolicitacaoItemController extends Controller
         ]);
 
         session()->flash('mensagem', 'Status alterado com sucesso');
+        
+        return redirect()->back();
+    }
+
+    public function deleteStatus($id){
+        $solicitacao = SolicitacaoItem::findOrFail($id);
+
+        $solicitacao->delete();
+
+        session()->flash('mensagem', 'Solicitação excluída com sucesso');
         
         return redirect()->back();
     }

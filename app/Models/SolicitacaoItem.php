@@ -15,7 +15,7 @@ class SolicitacaoItem extends Model
         'setor_id',
         'item_id',
         'quantidade',
-        'status',
+        'status', #enum (pendente ; negado ; aprovado_andamento ; aprovado_finalizado)
         'data_solicitacao',
         'observacao'
     ];

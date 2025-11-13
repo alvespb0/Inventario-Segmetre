@@ -33,7 +33,7 @@
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:center;">Setor</th>
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:center;">Status</th>
                     <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:center;">Quantidade</th>
-                    <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:right;">Ações</th>
+                    <th style="padding:.75rem 1rem; border-bottom:1px solid rgba(254,252,251,.1); text-align:center;">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,9 +48,6 @@
                         <td style="padding:.75rem 1rem; text-align:center;">{{ $solicitacao->quantidade }}</td>
                         <td style="padding:.75rem 1rem; text-align:right; white-space:nowrap;">
                             <button type="button" class="btn btn-ghost" style="padding:.35rem .7rem;" onclick="abrirModal({{ $solicitacao->id }})">Abrir</button>
-                            <button type="button" class="btn btn-ghost" style="padding:.35rem .7rem;">
-                                <a href="" style="text-decoration:none;color:white">Editar</a>
-                            </button>
                             
                             @if(Auth::user()->is_administrator)
                             <form action="{{route('solicitacoes.atualiza-status', $solicitacao->id)}}" method="POST" style="display:inline;">
@@ -66,6 +63,10 @@
                                     @endforeach
                                 </select>
                             </form>
+                            <button type="button" class="btn btn-ghost" style="padding:.35rem .7rem;">
+                                <a href="/solicitacoes/excluir/{{$solicitacao->id}}" style="text-decoration:none;color:white">Excluir</a>
+                            </button>
+
                             @endif
                         </td>
                     </tr>

@@ -7,6 +7,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemSetorController;
 use App\Http\Controllers\SolicitacaoItemController;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,4 +100,8 @@ Route::middleware(['auth'])->controller(SolicitacaoItemController::class)->group
     Route::get('/solicitacoes-realizadas/{setor_id}', 'readSolicitacoesSetor')->name('solicitacoes-setor.show');
     Route::get('/solicitacoes/novo', 'cadastroSolicitacao')->name('solicitacoes.new');
     Route::post('/solicitacoes/novo', 'createSolicitacao')->name('solicitacoes.create');
+});
+
+Route::middleware(['auth', 'admin'])->controller(RelatorioController::class)->group(function(){
+    Route::get('/relatorios', 'parametrizarRelatorio')->name('relatorio.show');
 });

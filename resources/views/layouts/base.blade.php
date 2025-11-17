@@ -44,7 +44,7 @@
                     <a href="/itens" class="nav-link {{ request()->is('itens') ? 'is-active' : '' }}">Itens</a>
                     @if(Auth::user()->is_administrator)
                         <a href="/fornecedores" class="nav-link {{ request()->is('fornecedores') ? 'is-active' : '' }}">Fornecedores</a>
-                        <a href="#" class="nav-link {{ request()->is('relatorios') ? 'is-active' : '' }}">Relatórios</a>
+                        <a href="/relatorios" class="nav-link {{ request()->is('relatorios') ? 'is-active' : '' }}">Relatórios</a>
                     <a href="/usuarios" class="nav-link {{ request()->is('usuarios') ? 'is-active' : '' }}">Usuários</a>
                     @endif
                     <div class="nav-actions">

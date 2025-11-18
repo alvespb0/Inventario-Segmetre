@@ -16,11 +16,10 @@
 <section class="card" style="padding: 1rem;">        
     <form action="{{route('itens.filter')}}" method="GET">
         <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
-                <input type="search" class="input" name="busca" placeholder="Buscar Item..." style="width:100%;" />
-                <div style="display:flex; gap:.5rem;">
-                    <button class="btn btn-ghost" type="submit">Filtrar</button>
-                    <button class="btn btn-ghost" type="button">Exportar</button>
-                </div>
+            <input type="search" class="input" name="busca" placeholder="Buscar Item..." style="width:100%;" />
+            <div style="display:flex; gap:.5rem;">
+                <button class="btn btn-ghost" type="submit">Filtrar</button>
+            </div>
         </div>
     </form>
 

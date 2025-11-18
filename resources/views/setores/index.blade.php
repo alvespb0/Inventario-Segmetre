@@ -14,13 +14,14 @@
     </section>
 
     <section class="card" style="padding: 1rem;">
-        <div style="display:grid; grid-template-columns: 1fr auto; gap:.75rem; align-items:center; margin-bottom: .75rem;">
-            <input type="search" class="input" placeholder="Buscar setor..." style="width:100%;" />
+    <form action="{{route('setores.filter')}}" method="GET">
+        <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
+            <input type="search" class="input" name="busca" placeholder="Buscar Item..." style="width:100%;" />
             <div style="display:flex; gap:.5rem;">
-                <button class="btn btn-ghost" type="button">Filtrar</button>
-                <button class="btn btn-ghost" type="button">Exportar</button>
+                <button class="btn btn-ghost" type="submit">Filtrar</button>
             </div>
         </div>
+    </form>
 
         <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
             @forelse($setores as $setor)

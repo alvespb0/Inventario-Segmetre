@@ -17,7 +17,86 @@ class SolicitacaoItemController extends Controller
      */
     public function readSolicitacoesGeral(){
         $solicitacoes = SolicitacaoItem::orderBy('data_solicitacao', 'desc')->paginate(5);
-        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes]);
+        $setores = Setor::all();
+        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes, 'setores' => $setores]);
+    }
+
+    /**
+     * Filtro de solicitações geral, para usuários admin
+     * @param Request $request
+     */
+    public function filterSolicitacoesGeral(Request $request){
+        $query = SolicitacaoItem::query();
+        $setores = Setor::all();
+
+        if(!empty($request->busca)){
+            $busca = $request->busca;
+            $query->whereHas('item', function ($q) use ($busca){
+                $q->where('nome', 'LIKE', "%{$busca}%");
+            });
+        }
+
+        if(!empty($request->setor)){
+            $query->where('setor_id', $request->setor);
+        }
+
+        if(!empty($request->status)){
+            $query->where('status', $request->status);
+        }
+
+        if(!empty($request->status)){
+            $query->where('status', $request->status);
+        }
+
+        if(!empty($request->dataInicialSolicitacao)){
+            $query->where('data_solicitacao', '>', $request->dataInicialSolicitacao);
+        }
+
+        if(!empty($request->dataFinalSolicitacao)){
+            $query->where('data_solicitacao', '<', $request->dataFinalSolicitacao);
+        }
+      
+        $solicitacoes = $query->orderBy('data_solicitacao', 'desc')->paginate(5)->appends($request->query());;
+    
+        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes, 'setores' => $setores]);
+    }
+
+    /**
+     * Filtro de solicitações do setor, para usuários não admin
+     * @param Request $request
+     */
+    public function filterSolicitacoesSetor(Request $request){
+        $query = SolicitacaoItem::query();
+        $setores = Setor::all();
+
+        if(!empty($request->busca)){
+            $busca = $request->busca;
+            $query->whereHas('item', function ($q) use ($busca){
+                $q->where('nome', 'LIKE', "%{$busca}%");
+            });
+        }
+
+        if(!empty($request->status)){
+            $query->where('status', $request->status);
+        }
+
+        if(!empty($request->status)){
+            $query->where('status', $request->status);
+        }
+
+        if(!empty($request->dataInicialSolicitacao)){
+            $query->where('data_solicitacao', '>', $request->dataInicialSolicitacao);
+        }
+
+        if(!empty($request->dataFinalSolicitacao)){
+            $query->where('data_solicitacao', '<', $request->dataFinalSolicitacao);
+        }
+    
+        $solicitacoes = $query->where('setor_id', $request->setor_id)
+                            ->orderBy('data_solicitacao', 'desc')
+                            ->paginate(5)->appends($request->query());;
+    
+        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes, 'setores' => $setores]);
     }
 
     /**
@@ -25,7 +104,8 @@ class SolicitacaoItemController extends Controller
      */
     public function readSolicitacoesSetor($setor_id){
         $solicitacoes = SolicitacaoItem::where('setor_id', $setor_id)->paginate(5);
-        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes]);
+        $setores = Setor::all();
+        return view('/solicitacoes/index', ['solicitacoes' => $solicitacoes, 'setores' => $setores]);
     }
 
     /**

@@ -14,16 +14,125 @@
     </section>
 
 <section class="card" style="padding: 1rem;">        
-    <form action="{{route('itens.filter')}}" method="GET">
-        <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
-                <input type="search" class="input" name="busca" placeholder="Buscar Solicitação..." style="width:100%;" />
-                <div style="display:flex; gap:.5rem;">
-                    <button class="btn btn-ghost" type="submit">Filtrar</button>
-                    <button class="btn btn-ghost" type="button">Exportar</button>
-                </div>
+<style>
+    /*
+ * 1. Estilização da Barra de Filtro (filter-bar)
+ * Usa flexbox para alinhamento horizontal.
+ */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; 
+    margin-bottom: 1rem;
+    padding: 0.75rem; /* Adiciona padding interno */
+    border-radius: 0.75rem; /* Bordas arredondadas */
+    flex-wrap: wrap; 
+}
+
+/*
+ * 2. Uniformização da Aparência de Inputs/Selects no Filtro
+ * Garante que todos os elementos de formulário dentro da filter-bar tenham altura e aparência consistentes.
+ */
+.filter-bar .input,
+.filter-bar .form-select,
+.filter-bar input[type="date"],
+.filter-bar select {
+    /* Altura fixa consistente para todos os elementos */
+    height: 40px; 
+    /* Remove a largura 100% dos inputs menores para que fiquem compactos */
+    width: auto; 
+    min-width: 120px; /* Largura mínima para Selects e Datas */
+}
+
+/* * 3. Campo de Busca (deve expandir)
+ */
+.filter-bar input[type="search"] {
+    flex-grow: 1; /* Ocupa o espaço restante */
+    min-width: 200px; /* Garante que não fique muito estreito */
+}
+
+/*
+ * 4. Ajustes para o Botão de Filtro
+ * Torna o botão primário para destacá-lo (em vez de 'ghost').
+ */
+.filter-actions {
+    display: flex;
+    align-items: center; /* Alinha o botão verticalmente */
+}
+.filter-actions .btn {
+    height: 40px; /* Mesma altura que os inputs */
+    padding: 0.5rem 1rem;
+}
+
+/*
+ * 5. Responsividade (para telas pequenas)
+ */
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-direction: column; /* Empilha os filtros verticalmente */
+        align-items: stretch; /* Estica os itens para 100% de largura */
+        gap: 0.5rem;
+    }
+    
+    .filter-bar .input,
+    .filter-bar .form-select,
+    .filter-bar input[type="date"],
+    .filter-bar select,
+    .filter-actions {
+        width: 100%; /* Faz todos ocuparem a largura total */
+        min-width: auto;
+    }
+}
+
+</style>
+@if(Auth::user()->is_administrator)
+    <form action="{{ route('solicitacoes.filter') }}" method="GET">
+        <div class="filter-bar">
+            <input type="search" class="input" name="busca" placeholder="Buscar Solicitação..." value="{{ request()->busca ? request()->busca : '' }}"/>
+            <select id="setorSolicitacao" name="setor" class="form-select">
+                <option value="">Setores</option> 
+                @foreach($setores as $setor)
+                <option value="{{ $setor->id }}" {{request()->setor == $setor->id ? 'selected' : ''}}>{{ $setor->nome }}</option>
+                @endforeach
+            </select>
+            <select name="status" class="form-select">
+                <option value="">Status</option>
+                @foreach (\App\Models\SolicitacaoItem::getStatuses() as $key => $label)
+                    <option value="{{ $key }}" {{request()->status == $key ? 'selected' : ''}}>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
+            <input type="date" name="dataInicialSolicitacao" title="Data Inicial" value="{{request()->dataInicialSolicitacao ? request()->dataInicialSolicitacao : ''}}">
+            <input type="date" name="dataFinalSolicitacao" title="Data Final" value="{{request()->dataFinalSolicitacao ? request()->dataFinalSolicitacao : ''}}">
+            
+            <div class="filter-actions">
+                <button class="btn btn-ghost" type="submit">Filtrar</button>
+            </div>
         </div>
     </form>
-
+@else
+    <form action="{{route('solicitacoes-setor.filter')}}" method="GET">
+        <div class="filter-bar">
+            <input type="hidden" name="setor_id" value="{{Auth::user()->setor_id}}">
+            <input type="search" class="input" name="busca" placeholder="Buscar Solicitação..." value="{{ request()->busca ? request()->busca : '' }}"/>
+            <select name="status" class="form-select">
+                <option value="">Status</option>
+                @foreach (\App\Models\SolicitacaoItem::getStatuses() as $key => $label)
+                    <option value="{{ $key }}" {{request()->status == $key ? 'selected' : ''}}>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
+            <input type="date" name="dataInicialSolicitacao" title="Data Inicial" value="{{request()->dataInicialSolicitacao ? request()->dataInicialSolicitacao : ''}}">
+            <input type="date" name="dataFinalSolicitacao" title="Data Final" value="{{request()->dataFinalSolicitacao ? request()->dataFinalSolicitacao : ''}}">
+            
+            <div class="filter-actions">
+                <button class="btn btn-ghost" type="submit">Filtrar</button>
+            </div>
+        </div>
+    </form>
+@endif
     <div style="overflow-x:auto;">
         <table style="width:100%; border-collapse:collapse; min-width:600px;">
             <thead>

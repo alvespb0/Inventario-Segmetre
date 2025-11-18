@@ -16,6 +16,13 @@ class SetorController extends Controller
     }
 
     /**
+     * Retorna a view de listagem de setores dado uma request
+     */
+    public function filterSetor(Request $request){
+        $setores = Setor::where('nome', 'LIKE', "%{$request->busca}%")->get();
+        return view("setores/index", ['setores' => $setores]);
+    }
+    /**
      * Retorna a view de cadastro de setor
      */
     public function cadastroSetor(){

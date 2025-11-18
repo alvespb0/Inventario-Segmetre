@@ -17,6 +17,13 @@ class FornecedorController extends Controller
     }
 
     /**
+     * Retorna a view de listagem de fornecedores dado uma request
+     */
+    public function filterFornecedores(Request $request){
+        $fornecedores = Fornecedor::where('nome', 'LIKE', "%{$request->busca}%")->get();
+        return view('/fornecedores/index', ['fornecedores' => $fornecedores]);
+    }
+    /**
      * Retorna a view de cadastro de fornecedor
      */
     public function cadastroFornecedor(){

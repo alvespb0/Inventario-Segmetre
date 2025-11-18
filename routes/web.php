@@ -24,6 +24,7 @@ use App\Http\Controllers\RelatorioController;
 /**         Rotas Classe Setor Controller         */
 Route::middleware(['auth','admin'])->controller(SetorController::class)->group(function(){
     Route::get('/setores', 'readSetor')->name('setores.show');
+    Route::get('/setores/busca', 'filterSetor')->name('setores.filter');
     Route::get('/setores/novo', 'cadastroSetor')->name('setores.new');
     Route::post('/setores/novo', 'createSetor')->name('setores.create');
     Route::get('/setores/editar/{id}', 'editarSetor')->name('setores.edit');
@@ -53,6 +54,7 @@ Route::controller(UserController::class)->group(function(){
 /**       Rotas Classe FornecedorController       */
 Route::middleware(['auth', 'admin'])->controller(FornecedorController::class)->group(function(){
     Route::get('/fornecedores', 'readFornecedores')->name('fornecedores.show');
+    Route::get('/fornecedores/busca', 'filterFornecedores')->name('fornecedores.filter');
     Route::get('/fornecedores/novo', 'cadastroFornecedor')->name('fornecedores.new');
     Route::post('/fornecedores/novo', 'createFornecedor')->name('fornecedores.create');
     Route::get('/fornecedores/editar/{id}', 'editarFornecedor')->name('fornecedores.edit');
@@ -92,16 +94,20 @@ Route::middleware(['auth'])->controller(ItemSetorController::class)->group(funct
 /**     Rotas Classe SolicitacaoItemController    */
 Route::middleware(['auth', 'admin'])->controller(SolicitacaoItemController::class)->group(function(){
     Route::get('/solicitacoes', 'readSolicitacoesGeral')->name('solicitacoes.show');
+    Route::get('/solicitacoes/busca', 'filterSolicitacoesGeral')->name('solicitacoes.filter');
     Route::post('/solicitacoes/atualiza-status/{id}', 'updateStatus')->name('solicitacoes.atualiza-status');
     Route::get('/solicitacoes/excluir/{id}', 'deleteStatus')->name('solicitacoes.delete');
 });
 
 Route::middleware(['auth'])->controller(SolicitacaoItemController::class)->group(function(){
     Route::get('/solicitacoes-realizadas/{setor_id}', 'readSolicitacoesSetor')->name('solicitacoes-setor.show');
+    Route::get('/solicitacoes-realizada/busca', 'filterSolicitacoesSetor')->name('solicitacoes-setor.filter');
     Route::get('/solicitacoes/novo', 'cadastroSolicitacao')->name('solicitacoes.new');
     Route::post('/solicitacoes/novo', 'createSolicitacao')->name('solicitacoes.create');
 });
 
+/** --------------------------------------------- */
+/**        Rotas Classe RelatorioController       */
 Route::middleware(['auth', 'admin'])->controller(RelatorioController::class)->group(function(){
     Route::get('/relatorios', 'parametrizarRelatorio')->name('relatorio.show');
     Route::get('/relatorios/gerar', 'gerarRelatorio')->name('relatorio.gerar');

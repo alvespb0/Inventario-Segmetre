@@ -104,4 +104,5 @@ Route::middleware(['auth'])->controller(SolicitacaoItemController::class)->group
 
 Route::middleware(['auth', 'admin'])->controller(RelatorioController::class)->group(function(){
     Route::get('/relatorios', 'parametrizarRelatorio')->name('relatorio.show');
+    Route::get('/relatorios/gerar', 'gerarRelatorio')->name('relatorio.gerar');
 });

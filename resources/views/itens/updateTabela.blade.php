@@ -5,7 +5,7 @@
 @section('content')
     <section class="card" style="padding: 1.25rem;">
         <header style="display:flex; justify-content: space-between; align-items:center; gap:1rem; margin-bottom: .75rem;">
-            <h1 style="margin:0; font-size: 1.25rem;">Fornecedores do Item {{ $itemFornecedor->first()->item->nome }}</h1>
+            <h1 style="margin:0; font-size: 1.25rem;">Fornecedores do Item {{ $itemFornecedor->first() ? $itemFornecedor->first()->item->nome : ''}}</h1>
             <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:.5rem; align-items:center;">
                 <input
                     type="search"

@@ -6,7 +6,7 @@
     <div class="card card-center" style="padding:2rem;">
       <h2 style="margin-bottom:1.5rem;">📊 Gerar Relatórios</h2>
 
-      <form id="formRelatorios" method="GET" action="" class="grid gap-md">
+      <form id="formRelatorios" method="GET" action="{{route('relatorio.gerar')}}" class="grid gap-md">
         
         {{-- Tipo de Relatório --}}
         <div>

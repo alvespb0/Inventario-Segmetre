@@ -6,18 +6,14 @@
     <section class="card" style="padding: 1.25rem;">
         <header style="display:flex; justify-content: space-between; align-items:center; gap:1rem; margin-bottom: .75rem;">
             <h1 style="margin:0; font-size: 1.25rem;">Itens do Setor {{$itensSetor->first() ? $itensSetor->first()->setor->nome : ''}}</h1>
-            <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:.5rem; align-items:center;">
-                <input
-                    type="search"
-                    name="q"
-                    class="input"
-                    placeholder="Buscar por nome/descrição"
-                    value="{{ request('q') }}"
-                    style="min-width: 220px;"
-                    aria-label="Buscar itens"
-                />
-                <button type="submit" class="btn btn-ghost">Buscar</button>
-            </form>
+        <form action="{{route('itemSetor.filter', $itensSetor->first() ? $itensSetor->first()->setor->id : '')}}" method="GET">
+            <div style="display:flex; justify-content: space-between; align-items: center; gap:.75rem; margin-bottom: .75rem;">
+                <input type="search" class="input" name="busca" placeholder="Buscar Item..." style="width:100%;" />
+                <div style="display:flex; gap:.5rem;">
+                    <button class="btn btn-ghost" type="submit">Filtrar</button>
+                </div>
+            </div>
+        </form>
         </header>
 
             <div id="itens-setor-list" class="table-like">

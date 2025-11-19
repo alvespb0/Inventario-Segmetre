@@ -26,7 +26,7 @@
             <div class="container navbar">
                 <a class="brand" href="/" aria-label="Página inicial">
                     <span class="brand-text">
-                        <span class="brand-title">Inventário Segmetre</span>
+                        <span class="brand-title">Compras Segmetre</span>
                         <span class="brand-sub">Controle simples, visão completa</span>
                     </span>
                 </a>
@@ -64,7 +64,7 @@
 
         <footer class="footer">
             <div class="container" style="display:flex; justify-content: space-between; align-items:center; gap: 1rem;">
-                <span>© {{ date('Y') }} Inventário por Setores</span>
+                <span>© {{ date('Y') }} Compras por Setores</span>
                 <span>Feito com <span aria-hidden>💙</span> usando Laravel</span>
             </div>
         </footer>

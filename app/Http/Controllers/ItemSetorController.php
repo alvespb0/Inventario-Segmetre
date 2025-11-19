@@ -21,6 +21,17 @@ class ItemSetorController extends Controller
         return view('index', ['itensSetor' => $itensSetor, 'setores' => $setores, 'itens' => $itens]);
     }
 
+    public function filterItemSetor(Request $request, $setor_id){
+        $busca = $request->busca;
+        
+        $itensSetor = ItemSetor::where('setor_id', $setor_id)
+                            ->whereHas('item', function ($q) use ($busca){
+                                $q->where('nome', 'LIKE', "%{$busca}%");
+                            })->get();
+
+        return view('/itemSetor/index', ['itensSetor' => $itensSetor]);
+    }
+
     /**
      * Retorna a view que traz os itens já cadastrados naquele setor, além da tabulação para alterar a quantidade em estoque
      */
